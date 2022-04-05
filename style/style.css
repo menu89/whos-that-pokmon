@@ -37,4 +37,36 @@ h1 {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+.quiz {
+  background-image: url("../assets/images/pngegg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 25rem;
+  height: 35rem;
+}
+.quiz__image {
+  margin: 17% 12% 3% 12%;
+  width: 75%;
+  height: 39%;
+  background-color: aqua;
+}
+.quiz__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5%;
+  position: relative;
+}
+.quiz__label {
+  margin: 0.5rem;
+}
+.quiz__button {
+  position: absolute;
+  bottom: -49%;
+  width: 90%;
+  font-family: "pokemon-pixel";
+  line-height: 1.5rem;
+  border: none;
 }/*# sourceMappingURL=style.css.map */
