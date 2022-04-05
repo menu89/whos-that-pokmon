@@ -1,39 +1,10 @@
-//pull information from the API
-//pull image and name for one from API
-//pull 3 random names from API
-
-//store name in variable for correct answer
-//store all 4 names in an array
-//array to populate the options section
-
-
-
-//loop for reloading the information related to the image and options
-//run the loop once and store all 20 questions into an secondary array(objects - saving each question as an object) - blur the image of the pokemon
-
-//clicking the button
-//remove the blur from the image - change the class of the object using javascript (class in scss which has animation removing the blur)
-// set an interval ... 
-// will validate the options to see if the answer is correct
-//highlight the correct one in green ...
-// if selected the wrong one ... highlight in red
-//variable for keeping score
-//set interval
-//next question - counter that keeps track of how many times it's clicked
-//updates inner text to the next index in the questions array
-
-//place a 20 second limit on each question - active the sequence that would have happened if next question had been selected?
-
-//get the objects from the main page? the form to populate the inner text
-
-//diving deeper (if time permits)
-//every time the user clicks submit, there is a bar on the side, which takes the image of the question, the correct answer and the answer that you chose
 
 const apiURL = 'https://pokeapi.co/api/v2/pokemon/'
-const pokemonId = 35
+const pokemonId = 0
 
 const questionArray = []
 
+//this function pulls information from the API
 function getPokemonObject() {
     axios.get(apiURL+getRandomNum())
     .then(response => {
@@ -41,7 +12,7 @@ function getPokemonObject() {
     })
 }
 
-
+//this function generate a random number to represent a pokemon in the API list
 function getRandomNum () {
     let returnValue = 0
     while (returnValue === 0) {
@@ -50,7 +21,7 @@ function getRandomNum () {
     return returnValue
 }
 
-
+//this function put an object into the array
 function populateQuestionArray(returnedFromAPI) {
     const questionObject = {}
     questionObject.correctPokemon = returnedFromAPI.species.name
@@ -58,6 +29,7 @@ function populateQuestionArray(returnedFromAPI) {
     questionObject.options = []
     questionObject.options.push(questionObject.correctPokemon)
 
+    //this section generates three random pokemon for the multiple choice incorrect answers
     Promise.all(
         [axios.get(apiURL+getRandomNum()),
         axios.get(apiURL+getRandomNum()),
@@ -69,6 +41,7 @@ function populateQuestionArray(returnedFromAPI) {
         questionObject.options.push(response[2].data.species.name)
     })
 
+    //sorts the array of options to alphabetical so that the option choice is randomized
     setTimeout(
         ()=>{
             questionObject.options.sort()
@@ -77,12 +50,13 @@ function populateQuestionArray(returnedFromAPI) {
     )
 }
 
+//runs the axois for API 20 times
 for (let pokemonLoop = 0; pokemonLoop<=19; pokemonLoop++) {
     getPokemonObject()
 }
 
 
-
+//pulling information from the form
 const quizImageEl = document.querySelector('.quiz__image')
 const quizSpanEl = document.querySelectorAll('.quiz__text')
 const quizFormEl = document.querySelector('.quiz__form')
@@ -93,6 +67,7 @@ const runningScoreEl = document.querySelector('.running-score')
 let currentScore = 0
 let numOfClicks = 0
 
+//takes information from the array and puts it into the quiz card
 function updateQuizCard(arrayIndex) {
     quizImageEl.setAttribute('src', questionArray[arrayIndex].imageSrc)
     for (let updOptLoop = 0; updOptLoop <=3; updOptLoop++ ) {
@@ -101,9 +76,13 @@ function updateQuizCard(arrayIndex) {
 
 }
 
+
+//factor in delay because of the promise above
 setTimeout(() => {
     console.log(questionArray)
     updateQuizCard(0)
+
+    //check answer and count score
     quizFormEl.addEventListener('submit', (event) => {
         event.preventDefault()
         for (let valLoop = 0; valLoop <=3; valLoop++ ) {
@@ -117,6 +96,7 @@ setTimeout(() => {
         console.log(numOfClicks,currentScore)
         event.target.reset()
 
+        //what happens at the end of the quiz
         if (numOfClicks === 10) {
             event.target.reset()
             scoreEl.classList.remove('score--hide')
@@ -130,12 +110,12 @@ setTimeout(() => {
 
 
 
-
+//pulling other items from the main page - i.e. button and header
 const startButtonEl = document.querySelector('.button')
 const quizSectionEl = document.querySelector('.quiz')
 const headerEl = document.querySelector('header')
 
-
+//what happens when we click the start button
 startButtonEl.addEventListener('click', () =>{
     startButtonEl.classList.add('button--hide')
     headerEl.classList.add('modify-header')
@@ -144,6 +124,8 @@ startButtonEl.addEventListener('click', () =>{
 
 const restartButton = document.querySelector('.score__button')
 
+//what happens when we click the restart button
+//it empties the array, and then reloads it and then starts the quiz process all over again.
 restartButton.addEventListener('click', () => {
     
     let length = questionArray.length
@@ -155,6 +137,7 @@ restartButton.addEventListener('click', () => {
         getPokemonObject()
     }
     
+    //factoring in time delay to allow the API to respond
     setTimeout(() =>{
         startButtonEl.classList.remove('button--hide')
         headerEl.classList.remove('modify-header')
