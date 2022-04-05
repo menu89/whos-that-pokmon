@@ -42,12 +42,14 @@ $golden-yellow: #FFDE00;
 body {
     margin: 0;
     font-family: 'pokemon-pixel';
+    background-image: url('../assets/images/background-pokemon.jpg');
+    height: 100vh;
+    background-size: cover;
+    background-position: 75%;
 }
 
 header {
     @include center;
-    background-color: $dark-red;
-    border-bottom: 4px solid black;
     height: 35vh;
     padding: 2rem;
 
@@ -90,11 +92,6 @@ h1 {
     }
 
     margin: 2rem auto;
-    // margin-top: 2rem;
-    // margin-bottom: 2rem;
-    // &--show {
-    //     display: block;
-    // }
 
     background-image: url('../assets/images/pngegg.png');
     background-size: cover;

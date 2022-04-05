@@ -9,14 +9,16 @@
 body {
   margin: 0;
   font-family: "pokemon-pixel";
+  background-image: url("../assets/images/background-pokemon.jpg");
+  height: 100vh;
+  background-size: cover;
+  background-position: 75%;
 }
 
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #CC0000;
-  border-bottom: 4px solid black;
   height: 35vh;
   padding: 2rem;
 }
