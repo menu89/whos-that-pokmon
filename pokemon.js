@@ -104,26 +104,25 @@ setTimeout(() => {
     updateQuizCard(0)
     quizFormEl.addEventListener('submit', (event) => {
         event.preventDefault()
-        console.log(event)
-        console.log(event.target.option[0].checked)
-        for (let valLoop = 0; valLoop <=3; valLoop++ ) {
-            const checkStatus = event.target.option[valLoop].checked
-            if (checkStatus && quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon) {
-                //change color to green
-                currentScore += 1
-            } else {
-                //change color to red
+        if (numOfClicks === 19) {
+            console.log('end game')
+        } else {
+            for (let valLoop = 0; valLoop <=3; valLoop++ ) {
+                let checkStatus = event.target.option[valLoop].checked
+                if (checkStatus && quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon) {
+                    //change color to green
+                    currentScore += 1
+                } else {
+                    //change color to red
+                }
+                event.target.reset()
             }
+            numOfClicks += 1
+            updateQuizCard(numOfClicks)
         }
-        numOfClicks += 1
-        console.log(currentScore)
-        // nextQuestionClick(event.target)
+        
     })
 }, 5000);
 
 
-// function nextQuestionClick(clickEvent) {
-//     numOfClicks += 1
-//     console.log(clickEvent)
-// }
 
