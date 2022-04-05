@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "pokemon-pixel";
+  src: url(../assets/fonts/PokemonGb-RAeo.ttf);
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "pokemon-pixel";
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #CC0000;
+  border-bottom: 4px solid black;
+  height: 35vh;
+  padding: 2rem;
+}
+
+h1 {
+  color: white;
+}
+
+.button {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-family: "pokemon-pixel";
+  background-color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}/*# sourceMappingURL=style.css.map */
