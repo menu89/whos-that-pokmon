@@ -103,21 +103,18 @@ function updateQuizCard(arrayIndex) {
 
 setTimeout(() => {
     console.log(questionArray)
-    console.log(questionArray[0])
     updateQuizCard(0)
     quizFormEl.addEventListener('submit', (event) => {
         event.preventDefault()
         for (let valLoop = 0; valLoop <=3; valLoop++ ) {
             let checkStatus = event.target.option[valLoop].checked
             if (checkStatus && quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon) {
-                //change color to green
                 currentScore += 1
-                console.log(currentScore)
             }
-            console.log(currentScore)
             runningScoreEl.innerText = currentScore
         }
         numOfClicks += 1
+        console.log(numOfClicks,currentScore)
         event.target.reset()
 
         if (numOfClicks === 10) {
@@ -126,7 +123,6 @@ setTimeout(() => {
             displaySpanEl.innerText = `${currentScore}/${numOfClicks}`
             
         } else {
-            console.log(currentScore)
             updateQuizCard(numOfClicks)
         }
     })
@@ -139,8 +135,7 @@ const startButtonEl = document.querySelector('.button')
 const quizSectionEl = document.querySelector('.quiz')
 const headerEl = document.querySelector('header')
 
-console.log(startButtonEl)
-console.log(quizSectionEl)
+
 startButtonEl.addEventListener('click', () =>{
     startButtonEl.classList.add('button--hide')
     headerEl.classList.add('modify-header')
