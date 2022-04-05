@@ -29,6 +29,47 @@
 //diving deeper (if time permits)
 //every time the user clicks submit, there is a bar on the side, which takes the image of the question, the correct answer and the answer that you chose
 
+const apiURL = 'https://pokeapi.co/api/v2/pokemon/'
+const pokemonId = 35
+
+const questionArray = []
+
+function getPokemonObject() {
+    axios.get(apiURL+pokemonId)
+    .then(response => {
+        console.log(response)
+        console.log(response.data.species.name)
+        const intermediaryVariable =  response.data.sprites.other['official-artwork'].front_default
+        console.log(intermediaryVariable)
+        populateQuestionArray(response.data)
+    })
+}
+
+
+function getRandomNum () {
+    return Math.floor(Math.random()*100)
+}
+
+
+function populateQuestionArray(returnedFromAPI) {
+    const questionObject = {}
+    questionObject.correctPokemon = returnedFromAPI.species.name
+    questionObject.imageSrc = returnedFromAPI.sprites.other['official-artwork'].front_default
+    questionObject.incorrectAnswers = []
+    for (let i=0; i <=2; i++) {
+        axios.get(apiURL+getRandomNum())
+        .then(response => {
+            randomName = response.data.species.name
+            questionObject.incorrectAnswers.push(randomName)
+        })
+    }
+    console.log(questionObject)
+
+    questionArray.push(questionObject)
+    console.log(questionArray)
+}
 
 
 
+
+getPokemonObject()
