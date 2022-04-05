@@ -1,0 +1,72 @@
+@use 'font' as *;
+
+//color theme 
+$red: #FF0000; 
+$dark-red: #CC0000;
+$blue: #3B4CCA;
+$golden-yellow: #FFDE00;
+
+
+//responsive mixins 
+
+@mixin tablet {
+    @media (min-width:48rem) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: 80rem){
+        @content;
+    }
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+//mixins 
+
+@mixin center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+body {
+    margin: 0;
+    font-family: 'pokemon-pixel';
+}
+
+header {
+    @include center;
+    background-color: $dark-red;
+    border-bottom: 4px solid black;
+    height: 35vh;
+    padding: 2rem;
+}
+
+h1 {
+    color: white;
+}
+
+
+.button {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    font-family: 'pokemon-pixel';
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
