@@ -50,10 +50,17 @@ header {
     border-bottom: 4px solid black;
     height: 35vh;
     padding: 2rem;
+
+}
+
+.modify-header {
+    height: 20vh;
 }
 
 h1 {
     color: white;
+    font-size: 4vw;
+    position: relative;
 }
 
 
@@ -67,21 +74,39 @@ h1 {
     font-family: 'pokemon-pixel';
     background-color: black;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 30%;
+    left: calc(50% - 4rem);
+
+    &--hide {
+        display: none;
+    }
+
 }
 
 .quiz {
+
+    &--hide {
+        display:none;
+    }
+
+    margin: 2rem auto;
+    // margin-top: 2rem;
+    // margin-bottom: 2rem;
+    // &--show {
+    //     display: block;
+    // }
+
     background-image: url('../assets/images/pngegg.png');
     background-size: cover;
     background-repeat: no-repeat;
     width: 25rem;
     height: 35rem;
+    
     &__image {
         margin: 17% 12% 3% 12%;
-        width: 75%;
+        width: 76%;
         height: 39%;
-        background-color: aqua;
+        background-color: #EAEAEA ;
     }
 
     &__form {
@@ -106,4 +131,28 @@ h1 {
         
     }
 
+}
+
+.score {
+    text-align: center;
+    background-color: $dark-red;
+    border: 2px solid blue;
+    color:white;
+    z-index: 1;
+    width: 20rem;
+    position: fixed;
+    top: 50%;
+    left: calc(50% - 10rem);
+
+    &--hide{
+        display: none;
+    }
+
+    &__button {
+        font-family: 'pokemon-pixel';
+        background-color: black;
+        color: white;
+        margin: 1rem;
+        padding: 0.5rem;
+    }
 }

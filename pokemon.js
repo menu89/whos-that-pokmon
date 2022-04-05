@@ -45,7 +45,7 @@ function getPokemonObject() {
 function getRandomNum () {
     let returnValue = 0
     while (returnValue === 0) {
-        returnValue = Math.floor(Math.random()*100)
+        returnValue = Math.floor(Math.random()*500)
     }
     return returnValue
 }
@@ -86,6 +86,8 @@ for (let pokemonLoop = 0; pokemonLoop<=19; pokemonLoop++) {
 const quizImageEl = document.querySelector('.quiz__image')
 const quizSpanEl = document.querySelectorAll('.quiz__text')
 const quizFormEl = document.querySelector('.quiz__form')
+const scoreEl = document.querySelector('.score')
+const displaySpanEl = document.querySelector('.score__current')
 
 let currentScore = 0
 let numOfClicks = 0
@@ -104,8 +106,10 @@ setTimeout(() => {
     updateQuizCard(0)
     quizFormEl.addEventListener('submit', (event) => {
         event.preventDefault()
-        if (numOfClicks === 19) {
-            console.log('end game')
+        if (numOfClicks === 9) {
+            event.target.reset()
+            scoreEl.classList.remove('score--hide')
+            displaySpanEl.innerText = `${currentScore}/${numOfClicks+1}`
         } else {
             for (let valLoop = 0; valLoop <=3; valLoop++ ) {
                 let checkStatus = event.target.option[valLoop].checked
@@ -117,12 +121,50 @@ setTimeout(() => {
                 }
                 event.target.reset()
             }
+            
             numOfClicks += 1
             updateQuizCard(numOfClicks)
         }
-        
     })
-}, 5000);
+}, 4000);
 
 
 
+
+const startButtonEl = document.querySelector('.button')
+const quizSectionEl = document.querySelector('.quiz')
+const headerEl = document.querySelector('header')
+
+console.log(startButtonEl)
+console.log(quizSectionEl)
+startButtonEl.addEventListener('click', () =>{
+    startButtonEl.classList.add('button--hide')
+    headerEl.classList.add('modify-header')
+    quizSectionEl.classList.remove('quiz--hide')
+})
+
+const restartButton = document.querySelector('.score__button')
+
+restartButton.addEventListener('click', () => {
+    
+    let length = questionArray.length
+
+    for (let empArray = 0; empArray < length; empArray++) {
+        questionArray.pop()
+    }
+    for (let pokemonLoop = 0; pokemonLoop<=19; pokemonLoop++) {
+        getPokemonObject()
+    }
+    
+    setTimeout(() =>{
+        startButtonEl.classList.remove('button--hide')
+        headerEl.classList.remove('modify-header')
+        quizSectionEl.classList.add('quiz--hide')
+        scoreEl.classList.add('score--hide')
+        numOfClicks = 0
+        currentScore = 0
+        console.log(questionArray)
+        updateQuizCard(0)
+    }, 4000)
+    
+})

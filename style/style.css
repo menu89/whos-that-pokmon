@@ -21,8 +21,14 @@ header {
   padding: 2rem;
 }
 
+.modify-header {
+  height: 20vh;
+}
+
 h1 {
   color: white;
+  font-size: 4vw;
+  position: relative;
 }
 
 .button {
@@ -35,22 +41,29 @@ h1 {
   font-family: "pokemon-pixel";
   background-color: black;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 30%;
+  left: calc(50% - 4rem);
+}
+.button--hide {
+  display: none;
 }
 
 .quiz {
+  margin: 2rem auto;
   background-image: url("../assets/images/pngegg.png");
   background-size: cover;
   background-repeat: no-repeat;
   width: 25rem;
   height: 35rem;
 }
+.quiz--hide {
+  display: none;
+}
 .quiz__image {
   margin: 17% 12% 3% 12%;
-  width: 75%;
+  width: 76%;
   height: 39%;
-  background-color: aqua;
+  background-color: #EAEAEA;
 }
 .quiz__form {
   display: flex;
@@ -69,4 +82,26 @@ h1 {
   font-family: "pokemon-pixel";
   line-height: 1.5rem;
   border: none;
+}
+
+.score {
+  text-align: center;
+  background-color: #CC0000;
+  border: 2px solid blue;
+  color: white;
+  z-index: 1;
+  width: 20rem;
+  position: fixed;
+  top: 50%;
+  left: calc(50% - 10rem);
+}
+.score--hide {
+  display: none;
+}
+.score__button {
+  font-family: "pokemon-pixel";
+  background-color: black;
+  color: white;
+  margin: 1rem;
+  padding: 0.5rem;
 }/*# sourceMappingURL=style.css.map */
