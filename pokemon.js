@@ -35,12 +35,12 @@ const pokemonId = 35
 const questionArray = []
 
 function getPokemonObject() {
-    axios.get(apiURL+pokemonId)
+    axios.get(apiURL+getRandomNum())
     .then(response => {
-        console.log(response)
-        console.log(response.data.species.name)
+        // console.log(response)
+        // console.log(response.data.species.name)
         const intermediaryVariable =  response.data.sprites.other['official-artwork'].front_default
-        console.log(intermediaryVariable)
+        // console.log(intermediaryVariable)
         populateQuestionArray(response.data)
     })
 }
@@ -63,13 +63,29 @@ function populateQuestionArray(returnedFromAPI) {
             questionObject.incorrectAnswers.push(randomName)
         })
     }
-    console.log(questionObject)
+    // console.log(questionObject)
 
     questionArray.push(questionObject)
-    console.log(questionArray)
+    // console.log(questionArray)
 }
 
 
 
 
 getPokemonObject()
+getPokemonObject()
+
+console.log(questionArray)
+console.log(questionArray[0])
+
+const quizImageEl = document.querySelector('.quiz__image')
+const quizInputEl = document.querySelectorAll('.quiz__options')
+
+console.log(quizImageEl)
+console.log(quizInputEl)
+
+function updateQuizCard(arrayIndex) {
+    quizImageEl.setAttribute('src', questionArray[arrayIndex].imageSrc)
+}
+
+// updateQuizCard(0)
