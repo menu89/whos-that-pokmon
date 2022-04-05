@@ -37,17 +37,17 @@ const questionArray = []
 function getPokemonObject() {
     axios.get(apiURL+getRandomNum())
     .then(response => {
-        // console.log(response)
-        // console.log(response.data.species.name)
-        const intermediaryVariable =  response.data.sprites.other['official-artwork'].front_default
-        // console.log(intermediaryVariable)
         populateQuestionArray(response.data)
     })
 }
 
 
 function getRandomNum () {
-    return Math.floor(Math.random()*100)
+    let returnValue = 0
+    while (returnValue === 0) {
+        returnValue = Math.floor(Math.random()*100)
+    }
+    return returnValue
 }
 
 
@@ -55,37 +55,75 @@ function populateQuestionArray(returnedFromAPI) {
     const questionObject = {}
     questionObject.correctPokemon = returnedFromAPI.species.name
     questionObject.imageSrc = returnedFromAPI.sprites.other['official-artwork'].front_default
-    questionObject.incorrectAnswers = []
-    for (let i=0; i <=2; i++) {
-        axios.get(apiURL+getRandomNum())
-        .then(response => {
-            randomName = response.data.species.name
-            questionObject.incorrectAnswers.push(randomName)
-        })
-    }
-    // console.log(questionObject)
+    questionObject.options = []
+    questionObject.options.push(questionObject.correctPokemon)
 
-    questionArray.push(questionObject)
-    // console.log(questionArray)
+    Promise.all(
+        [axios.get(apiURL+getRandomNum()),
+        axios.get(apiURL+getRandomNum()),
+        axios.get(apiURL+getRandomNum())]
+    )
+    .then(response => {
+        questionObject.options.push(response[0].data.species.name)
+        questionObject.options.push(response[1].data.species.name)
+        questionObject.options.push(response[2].data.species.name)
+    })
+
+    setTimeout(
+        ()=>{
+            questionObject.options.sort()
+            questionArray.push(questionObject)
+        },3000
+    )
+}
+
+for (let pokemonLoop = 0; pokemonLoop<=19; pokemonLoop++) {
+    getPokemonObject()
 }
 
 
 
-
-getPokemonObject()
-getPokemonObject()
-
-console.log(questionArray)
-console.log(questionArray[0])
-
 const quizImageEl = document.querySelector('.quiz__image')
-const quizInputEl = document.querySelectorAll('.quiz__options')
+const quizSpanEl = document.querySelectorAll('.quiz__text')
+const quizFormEl = document.querySelector('.quiz__form')
 
-console.log(quizImageEl)
-console.log(quizInputEl)
+let currentScore = 0
+let numOfClicks = 0
 
 function updateQuizCard(arrayIndex) {
     quizImageEl.setAttribute('src', questionArray[arrayIndex].imageSrc)
+    for (let updOptLoop = 0; updOptLoop <=3; updOptLoop++ ) {
+        quizSpanEl[updOptLoop].innerText = questionArray[arrayIndex].options[updOptLoop]
+    }
+
 }
 
-// updateQuizCard(0)
+setTimeout(() => {
+    console.log(questionArray)
+    console.log(questionArray[0])
+    updateQuizCard(0)
+    quizFormEl.addEventListener('submit', (event) => {
+        event.preventDefault()
+        console.log(event)
+        console.log(event.target.option[0].checked)
+        for (let valLoop = 0; valLoop <=3; valLoop++ ) {
+            const checkStatus = event.target.option[valLoop].checked
+            if (checkStatus && quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon) {
+                //change color to green
+                currentScore += 1
+            } else {
+                //change color to red
+            }
+        }
+        numOfClicks += 1
+        console.log(currentScore)
+        // nextQuestionClick(event.target)
+    })
+}, 5000);
+
+
+// function nextQuestionClick(clickEvent) {
+//     numOfClicks += 1
+//     console.log(clickEvent)
+// }
+
