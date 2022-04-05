@@ -88,6 +88,7 @@ const quizSpanEl = document.querySelectorAll('.quiz__text')
 const quizFormEl = document.querySelector('.quiz__form')
 const scoreEl = document.querySelector('.score')
 const displaySpanEl = document.querySelector('.score__current')
+const runningScoreEl = document.querySelector('.running-score')
 
 let currentScore = 0
 let numOfClicks = 0
@@ -106,23 +107,26 @@ setTimeout(() => {
     updateQuizCard(0)
     quizFormEl.addEventListener('submit', (event) => {
         event.preventDefault()
-        if (numOfClicks === 9) {
+        for (let valLoop = 0; valLoop <=3; valLoop++ ) {
+            let checkStatus = event.target.option[valLoop].checked
+            if (checkStatus && quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon) {
+                //change color to green
+                currentScore += 1
+                console.log(currentScore)
+            }
+            console.log(currentScore)
+            runningScoreEl.innerText = currentScore
+        }
+        numOfClicks += 1
+        event.target.reset()
+
+        if (numOfClicks === 10) {
             event.target.reset()
             scoreEl.classList.remove('score--hide')
-            displaySpanEl.innerText = `${currentScore}/${numOfClicks+1}`
-        } else {
-            for (let valLoop = 0; valLoop <=3; valLoop++ ) {
-                let checkStatus = event.target.option[valLoop].checked
-                if (checkStatus && quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon) {
-                    //change color to green
-                    currentScore += 1
-                } else {
-                    //change color to red
-                }
-                event.target.reset()
-            }
+            displaySpanEl.innerText = `${currentScore}/${numOfClicks}`
             
-            numOfClicks += 1
+        } else {
+            console.log(currentScore)
             updateQuizCard(numOfClicks)
         }
     })
@@ -163,6 +167,7 @@ restartButton.addEventListener('click', () => {
         scoreEl.classList.add('score--hide')
         numOfClicks = 0
         currentScore = 0
+        runningScoreEl.innerText = currentScore
         console.log(questionArray)
         updateQuizCard(0)
     }, 4000)
