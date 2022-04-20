@@ -16,10 +16,6 @@ const runningScoreEl = document.querySelector('.running-score')
 let currentScore = 0
 let numOfClicks = 0
 
-const startButtonEl = document.querySelector('.button')
-const quizSectionEl = document.querySelector('.quiz')
-const headerEl = document.querySelector('header')
-
 //this function generate a random number to represent a pokemon in the API list
 function getRandomNum () {
     let returnValue = 0
@@ -45,40 +41,12 @@ function generateOptions() {
         axios.get(apiURL+getRandomNum()),
         axios.get(apiURL+getRandomNum())]
     ).then( (response) => {
-        //console.log("update generate options",questionArray) not run twice
         const lengthIndex = questionArray.length - 1
         populateOptionsInQuestionArray(response, lengthIndex)
         updateQuizCard(numOfClicks)
-        
-        //console.log("is this run twixe - 2") no
     })
 }
 
-//check answer and count score
-function quizClickEvent() {
-    quizFormEl.addEventListener('submit', (event) => {
-        event.preventDefault()
-        for (let valLoop = 0; valLoop <=3; valLoop++ ) {
-            let checkStatus = event.target.option[valLoop].checked
-            if (checkStatus && (quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon)) {
-                currentScore += 1
-            }
-            runningScoreEl.innerText = currentScore
-        }
-        numOfClicks += 1
-        console.log("quiz click event",numOfClicks,currentScore)
-        event.target.reset()
-
-        //what happens at the end of the quiz
-        if (numOfClicks === 10) {
-            event.target.reset()
-            scoreEl.classList.remove('score--hide')
-            displaySpanEl.innerText = `${currentScore}/${numOfClicks}`
-            
-        }
-        getPokemonObject()
-    })
-}
 //this function puts an object into the array
 function partiallyPopulateQuestionArray(returnedFromAPI) {
     const questionObject = {}
@@ -106,9 +74,12 @@ function updateQuizCard(arrayIndex) {
     for (let updOptLoop = 0; updOptLoop <=3; updOptLoop++ ) {
         quizSpanEl[updOptLoop].innerText = questionArray[arrayIndex].options[updOptLoop]
     }
-    //console.log("update quiz card after score update") no
 }
 
+//grabbing objects needed for event listeners
+const startButtonEl = document.querySelector('.button')
+const quizSectionEl = document.querySelector('.quiz')
+const headerEl = document.querySelector('header')
 
 //what happens when we click the start button
 startButtonEl.addEventListener('click', () =>{
@@ -116,9 +87,30 @@ startButtonEl.addEventListener('click', () =>{
     headerEl.classList.add('modify-header')
     quizSectionEl.classList.remove('quiz--hide')
     getPokemonObject()
-    quizClickEvent()
 })
 
+//check answer and count score
+quizFormEl.addEventListener('submit', (event) => {
+    event.preventDefault()
+    for (let valLoop = 0; valLoop <=3; valLoop++ ) {
+        let checkStatus = event.target.option[valLoop].checked
+        if (checkStatus && (quizSpanEl[valLoop].innerText === questionArray[numOfClicks].correctPokemon)) {
+            currentScore += 1
+        }
+        runningScoreEl.innerText = currentScore
+    }
+    numOfClicks += 1
+    console.log("quiz click event",numOfClicks,currentScore)
+    event.target.reset()
+
+    //what happens at the end of the quiz
+    if (numOfClicks === 10) {
+        event.target.reset()
+        scoreEl.classList.remove('score--hide')
+        displaySpanEl.innerText = `${currentScore}/${numOfClicks}`   
+    }
+    getPokemonObject()
+})
 
 const restartButton = document.querySelector('.score__button')
 
