@@ -115,7 +115,7 @@ quizFormEl.addEventListener('submit', (event) => {
 const restartButton = document.querySelector('.score__button')
 
 //what happens when we click the restart button
-//it empties the array, and then reloads it and then starts the quiz process all over again.
+//it empties the array, and then restarts the quiz
 restartButton.addEventListener('click', () => {
     
     let length = questionArray.length
